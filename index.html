@@ -212,8 +212,8 @@
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
-                                    var key = childData.style;
-                                    var value = childData.style;
+                                    var key = childData.key;
+                                    var value = childData.value;
                                     $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
