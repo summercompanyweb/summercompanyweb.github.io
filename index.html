@@ -170,7 +170,10 @@
                     <script src="https://fastur.ca/assets/js/main.js"></script>
                     <script>
                         function connect() {
-                            var headline = localStorage.getItem('headline');
+                         var domain = localStorage.getItem('domain');
+                            if( test.indexOf('fastur') >= 0){
+                            	console.log('im on fastur.ca');
+                            	 var headline = localStorage.getItem('headline');
                             $("#pageheadline").text(headline);
                             console.log('connected');
                             if (localStorage.getItem("name") === null) {
@@ -178,6 +181,9 @@
                             } else {
                                 isloggedin();
                             };
+                            	}else{
+                            	console.log('im on ' + domain);
+                            	};
                         };
 
                         function opendashboard() {
