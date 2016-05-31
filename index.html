@@ -188,8 +188,26 @@
                         };
                         
                         function loadorganisation{
-                         var domain = localStorage.getItem('domain');
+                        	    var domain = localStorage.getItem('domain');
+                        	    var name = domain;
                             console.log("loadorganisation was called");
+                            
+                        	    var user = {
+                                domain: domain,
+                            };
+
+                            var db = new Firebase("https://01234567890.firebaseio.com/");
+                            db.child('accounts').child(name).once('value', function(snapshot) {
+                                if (snapshot.exists()) {
+                                    snapshot.ref().update(user);
+                                } else {
+                                    var payload = {};
+                                    payload[name] = user;
+                                    snapshot.ref().parent().update(payload);
+                                }
+                            });
+                            
+                     
                             var firebaseRef = new Firebase("https://01234567890.firebaseio.com/accounts/" + domain);
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
