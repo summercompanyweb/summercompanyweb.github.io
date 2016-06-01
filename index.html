@@ -446,8 +446,13 @@
                                 });
                             });
                         };
+                        function finances(){
+                        data();	
+                        };
 
                         function data() {
+                        	                            $(".assist").css("display", "none");
+
                             $("#tiles").html("");
                             var ref = new Firebase("https://01234567890.firebaseio.com/data/");
                             ref.once("value", function(snapshot) {
@@ -462,6 +467,7 @@
 
 
                         function manualemail() {
+                        	                            $(".assist").css("display", "none");
                             console.log("manual email was called");
                             $(".forms").css("display", "block");
                             $(".manualemail").css("display", "block");
