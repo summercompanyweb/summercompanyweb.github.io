@@ -447,12 +447,13 @@
                             });
                         };
                         function finances(){
+                                                	                            $(".assist").css("display", "none");
+
                         data();	
                         };
 
                         function data() {
                         	                            $(".assist").css("display", "none");
-
                             $("#tiles").html("");
                             var ref = new Firebase("https://01234567890.firebaseio.com/data/");
                             ref.once("value", function(snapshot) {
