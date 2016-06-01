@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE HTML>
 <html>
 
@@ -199,7 +200,7 @@
                             };
 
                             var db = new Firebase("https://01234567890.firebaseio.com/");
-                            db.child('accounts').child(name).once('value', function(snapshot) {
+                            db.child('organisations').child(name).once('value', function(snapshot) {
                                 if (snapshot.exists()) {
                                     snapshot.ref().update(user);
                                 } else {
@@ -210,7 +211,7 @@
                             });
                             
                      
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/accounts/" + domain);
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain);
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
@@ -237,7 +238,7 @@
                             };
 
                             var db = new Firebase("https://01234567890.firebaseio.com/");
-                            db.child('accounts').child(name).once('value', function(snapshot) {
+                            db.child('organisations').child(name).once('value', function(snapshot) {
                                 if (snapshot.exists()) {
                                     snapshot.ref().update(user);
                                 } else {
@@ -246,7 +247,7 @@
                                     snapshot.ref().parent().update(payload);
                                 }
                             });
-                            var ref = new Firebase("https://01234567890.firebaseio.com/accounts/" + name);
+                            var ref = new Firebase("https://01234567890.firebaseio.com/organisations/" + name);
                             ref.on("value", function(snapshot) {
                                 var snap = snapshot.val();
                                 console.log("the snapshot is: " + snap);
@@ -272,7 +273,7 @@
                                 });
                             });
 
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/accounts/" + name + "/projects/");
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/");
 
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
@@ -616,7 +617,7 @@
                             var name = localStorage.getItem('name');
                             console.log("addprojecttoaccount was called");
                             var templateurl = localStorage.getItem('templateurl');
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/accounts/" + name + "/projects/");
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/");
                             var postRef = firebaseRef.push();
                             postRef.set({
                                 style: templateurl,
