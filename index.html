@@ -211,7 +211,7 @@
                             });
                             
                      
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain);
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain + "tiles");
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
