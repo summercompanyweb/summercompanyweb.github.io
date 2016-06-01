@@ -212,12 +212,13 @@
                             });
                             
                      
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain + "tiles");
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain + "/tiles");
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
                                     var key = childData.key;
                                     var value = childData.value;
+                                    console.log("key");
                                     $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
