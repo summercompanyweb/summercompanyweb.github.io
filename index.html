@@ -1,7 +1,4 @@
-
-
 <!DOCTYPE HTML>
-<html>
 
 <head>
     <script>
@@ -9,8 +6,8 @@
         document.title = domainname;
         var domainwithoutperiod = domainname.replace(/\./g, ' ');
         localStorage.setItem('domain', domainwithoutperiod);
-        var host = domainname;if ((host == window.location.host) && (window.location.protocol != "https:")) window.location.protocol = "https";
-
+        var host = domainname;
+        //if ((host == window.location.host) && (window.location.protocol != "https:")) window.location.protocol = "https";
     </script>
     <title>Fastur</title>
     <meta charset="utf-8" />
@@ -30,30 +27,29 @@
     <div id="wrapper">
         <!-- Header -->
         <header id="header">
-            <!--<nav>
+            <nav>
                 <ul>
                     <li><a href="#menu">Menu</a></li>
                 </ul>
-            </nav>-->
+            </nav>
         </header>
         <!-- Intro -->
         <section id="intro" style="display:none" class="wrapper featured style1 assist">
             <div class="inner">
-                <span class="image"><img src='https://fastur.ca/images/summer.gif'></span>
+                <span class="image"><img src='https://fastur.ca/images/assist.png'></span>
                 <div class="content">
                     <header>
 
                         <div class="title">
-                            <h1>I'm Assist!</h1></div>
+                            <h1><b>Fastur</b></h1></div>
                         <p>
-                            <div class="body">I help organisations of all sizes build web apps.</div><br />
-                            <br />
+                            <div class="body">The fastest way to launch and manage any project.</div><br />
                         </p>
                     </header>
                     <footer>
 
                         <ul class="actions">
-                            <li><a href="#" class="assistbutton button big">open dashboard</a></li>
+                            <li><a href="#" class="assistbutton button big">Log In</a></li>
                         </ul>
                     </footer>
                 </div>
@@ -67,7 +63,7 @@
         <section style="display:none" class="forms wrapper style1">
             <div class="inner">
                 <div style="display:none" class="manualdata">
-                    <h2>add data</h2>
+                    <h2 class="adddataheader">add data</h2>
                     <div class="row uniform">
                         <div class="6u 12u$(xsmall)">
                             <input type="text" name="demo-name" id="demo-name" value="" class="key" placeholder="key">
@@ -81,15 +77,16 @@
 														<option value="">- base -</option>
 														<option value="1">guests</option>
 														<option value="1">users</option>
-														<option value="1">organisations</option>
 														<option value="1">emails</option>
 														<option value="1">data</option>
+														<option value="1">organisations/whats%20new</option>
+														
 													</select>
                             </div>
                         </div>
                         <div class="12u$">
                             <ul class="actions">
-                                <li><a href="#" class="special">add data</a></li>
+                                <li><a href="#" class="databutton special">add data</a></li>
                                 <li><input type="reset" value="Reset"></li>
                             </ul>
                         </div>
@@ -118,7 +115,7 @@
                         </div>
                         <div class="12u$">
                             <ul class="actions">
-                                <li><a href="#">send email</a></li>
+                                <li><a class='emailbutton' href="#">send email</a></li>
                                 <li><input type="reset" value="Reset"></li>
                             </ul>
                         </div>
@@ -138,9 +135,9 @@
                         <ul class="icons">
                             <li><a href="https://twitter.com/assistfastur" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
                             <li><a href="https://medium.com/@assist" class="icon fa-medium"><span class="label">Instagram</span></a></li>
-                            <li><a href="https://github.com/Fastur/fastur.github.io/" class="icon fa-github"><span class="label">GitHub</span></a></li>
+                            <li><a href="https://github.com/Fastur" class="icon fa-github"><span class="label">GitHub</span></a></li>
                         </ul>
-                        <p>☺ Fastur Inc. <a href="http://www.fastur.ca/terms">Terms</p>
+                        <p class="edit name" onKeyup="editchanges(this.innerText);" contenteditable='true'>☺ Fastur Inc. <a href="http://www.fastur.ca/terms">Terms</p>
             </div>
         </section>
         
@@ -173,30 +170,27 @@
                     <script src="https://fastur.ca/assets/js/main.js"></script>
                     <script>
                         function connect() {
-                         var domain = localStorage.getItem('domain');
-                            if( domain.indexOf('fastur') >= 0){
-                            	console.log('im on fastur.ca');
-                            	 var headline = localStorage.getItem('headline');
-                            $("#pageheadline").text(headline);
-                            console.log('connected');
-                            if (localStorage.getItem("name") === null) {
-                                isguest();
+                            var domain = localStorage.getItem('domain');
+                            if (domain.indexOf('fastur') >= 0) {
+                                //console.log('im on fastur.ca');
+                                //var projectname = localStorage.getItem('projectname');
+                                //$("#pageprojectname").text(projectname);
+                                //console.log('connected');
+                                if (localStorage.getItem("name") === null) {
+                                    isguest();
+                                } else {
+                                    isloggedin();
+                                };
                             } else {
-                                isloggedin();
+                                console.log('im on ' + domain);
                             };
-                            	}else{
-                            	console.log('im on ' + domain);
-                            	getstarted();
-                            	 loadorganisation();
-                            	};
                         };
-                        
+
                         function loadorganisation() {
-                        	    var domain = localStorage.getItem('domain');
-                        	    var name = domain;
+                            var domain = localStorage.getItem('domain');
+                            var name = domain;
                             console.log("loadorganisation was called");
-                            
-                        	    var user = {
+                            var user = {
                                 domain: domain,
                             };
 
@@ -210,33 +204,33 @@
                                     snapshot.ref().parent().update(payload);
                                 }
                             });
-                            
-                     
+
+
                             var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + domain + "/tiles");
                             firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
                                     var key = childData.key;
                                     var value = childData.value;
-                                    console.log("key");
-                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
                         };
 
                         function opendashboard() {
                             console.log("opendashboard was called");
-                            var headline = $(".headline").val();
+                            var projectname = $(".projectname").val();
                             var name = $(".name").val();
                             var email = $(".email").val();
                             localStorage.setItem('name', name);
+                            localStorage.setItem('projectname', name);
                             localStorage.setItem('email', email);
-                            localStorage.setItem('headline', headline);
+                            localStorage.setItem('projectname', projectname);
 
                             var user = {
                                 email: email,
                                 name: name,
-                                headline: headline
+                                projectname: projectname
                             };
 
                             var db = new Firebase("https://01234567890.firebaseio.com/");
@@ -259,37 +253,28 @@
                         };
 
                         function isguest() {
+                            $(".assist").css("display", "block");
                             console.log('im a guest');
-                            newproject();
+                            loadorganisation();
                         };
 
                         function isloggedin() {
                             var name = localStorage.getItem('name');
-                            var ref = new Firebase("https://01234567890.firebaseio.com/users/");
-                            ref.once("value", function(snapshot) {
+                            loadorganisation();
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/");
+                            firebaseRef.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
                                     var key = childData.key;
                                     var value = childData.value;
-                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
-                                });
-                            });
-
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/");
-
-                            firebaseRef.once("value", function(snapshot) {
-                                snapshot.forEach(function(childSnapshot) {
-                                    var childData = childSnapshot.val();
-                                    var key = childData.style;
-                                    var value = childData.style;
-                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
 
                             $(".name").text(name);
                             $(".login").text('logout');
                             $(".getstarted").text('dashboard');
-                            $(".gnameedtour").text('get pro');
+                            $(".guidedtour").text('get pro');
                             //gethappenings();
                         };
 
@@ -308,51 +293,66 @@
                             console.log("guidedtour was called");
                             $("#iframeone").css("display", "none");
                             $("#main").css("display", "block");
-
+                            $(".assistbutton").css("display", "block");
                             $(".assist").css("display", "block");
-                            $(".assistbutton").text("open dashboard");
+                            $(".assistbutton").text("new project");
                             $(".title").html("");
-                            $(".body").html("choose a style, add your text and publish your site!");
+                            $(".body").html("choose a style and add your text");
                         };
 
                         function getstarted() {
-
                             console.log("getstarted was called");
+                            cleartiles();
                             $("#iframeone").css("display", "none");
                             $(".title").html("");
-                            $(".body").html("<div class='title'><input type='text' name='demo-name' id='demo-name' class='headline' value='' placeholder='company name:'></div><br><input type='text' name='demo-name' id='demo-name' value='' class='name' placeholder='What is your name?'><br><input type='text' name='demo-name' id='demo-name' class='email' value='' placeholder='What is your email?'><br>");
-                            $(".assistbutton").text("open dashboard");
+                            $(".body").html("<div class='title'><input type='text' name='demo-name' id='demo-name' class='projectname' value='' placeholder='project name'></div><br><input type='text' name='demo-name' id='demo-name' value='' class='name' placeholder='What is your name?'><br><input type='text' name='demo-name' id='demo-name' class='email' value='' placeholder='What is your email?'><br>");
+                            $(".assistbutton").text("select style");
                             $(".assist").css("display", "block");
-                            $(".headline").focus();
-                            $("#main").css("display", "block");
+                            $(".projectname").focus();
                         };
 
                         function directory() {
+                            $("#main").css("display", "block");
                             $("#iframeone").css("display", "none");
+                            cleartiles();
                             console.log("directory was called");
                             cognitive();
                             getspaces();
                             gethappenings();
                         };
 
-
                         function whatsnew() {
                             $(".assist").css("display", "none");
+                            cleartiles();
                             console.log("whatsnew was called");
+                            var ref = new Firebase("https://01234567890.firebaseio.com/organisations/whats%20new/");
+                            ref.once("value", function(snapshot) {
+                                snapshot.forEach(function(childSnapshot) {
+                                    var childData = childSnapshot.val();
+                                    var key = childData.key;
+                                    var value = childData.value;
+                                    var url = childData.url;
+                                    $("#tiles").append("<article id='" + key + "' class='" + url + "' name='" + value + "' onClick='preview(this.className); storekey(this.id); storevalue(this.name);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a ' href='javscript:; '> <h2>" + key + "</h2> <div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                });
+                            });
                             cognitive();
                         };
 
                         function login() {
                             console.log('login was called ');
+                            cleartiles();
                             $(".title").html("");
                             $(".body").html("<div class='title'><input type='text' name='demo-name' id='demo-name' value='' class='name' placeholder='Name'></div>");
                             $(".assistbutton").text("open dashboard");
                             $(".assist").css("display", "block");
                             $(".name").focus();
                         };
+                        
+                        
 
                         function search() {
                             console.log('search was called');
+                            cleartiles();
                             $("#iframeone").css("display", "none");
                             $(".title").html("");
                             $(".body").html("<div class='title'><input type='text' name='demo-name' id='query' class='query' value='' placeholder='Search for'></div>");
@@ -364,14 +364,29 @@
                         function searchnow() {
                             var query = $(".query").val();
                             console.log(query);
-                            var ref = new Firebase("https://01234567890.firebaseio.com/users/" + query);
+                            //check within projects
+                            var ref = new Firebase("https://01234567890.firebaseio.com/organisations/" + query + "/projects/");
                             ref.on("value", function(snapshot) {
-                                var newPost = snapshot.val();
+                                var childData = snapshot.val();
+                                console.log(childData);
+                                var key = childData.key;
+                                var value = childData.value;
+                                $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                            });
+                            //check within organizations
+                            var ref = new Firebase("https://01234567890.firebaseio.com/organisations/" + query);
+                            ref.on("value", function(snapshot) {
+                                var childData = snapshot.val();
+                                console.log(childData);
+                                var key = childData.key;
+                                var value = childData.value;
+                                $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                             });
                         };
 
                         function questions() {
                             console.log('questions was called ');
+                            cleartiles();
                             $(".title").html("");
                             $(".body").html("<div class='title'><input type='text' name='demo-name' id='demo-name' class='ask' value='' placeholder='Question'></div>");
                             $(".assistbutton").text("ask");
@@ -379,21 +394,27 @@
                             $(".name").focus();
                         };
 
+                        function storekey(valuepassed) {
+                            console.log('storekey was called');
+                            localStorage.setItem('key', valuepassed);
+                        };
 
+                        function storevalue(valuepassed) {
+                            console.log('storevalue was called ');
+                            localStorage.setItem('value', valuepassed);
+                        };
 
                         function preview(valuepassed) {
                             document.getElementById('iframeone').setAttribute('src', valuepassed);
                             $("#main").css("display", "none");
-                            $("#assist").css("display", "none");
+                            $("assist").css("display", "none");
                             var iframeDocument = document.getElementById('iframeone').contentDocument;
                             $("#iframeone").css("display", "block");
                             iframeDocument.designMode = 'on';
                             localStorage.setItem('templateurl', valuepassed);
                             addprojecttoaccount();
-
-                            //turnondesignmode();
-
                         };
+
 
                         function back() {
                             //turnoffdesignmode();
@@ -402,8 +423,7 @@
                             $("#iframeone").css("display", "none");
                         };
 
-
-                        function tileclick(obj) {
+                        function callthisfunction(obj) {
                             var function_to_call = obj.replace(/\s+/g, '').toLowerCase();
                             window[function_to_call]();
                         };
@@ -434,26 +454,41 @@
                             });
                         };
 
+                        function datafromwebsite() {
+                            manualdata();
+                            console.log("data from website was called");
+                            $('.key').attr('placeholder', 'the url');
+                            $('.value').css("display", "none");
+                            $(".databutton").text('get data');
+                            $(".base").css("display", "none");
+                            $('.adddataheader').html('Add data source');
+                        };
+
+                        function getdata() {
+                            console.log("getdata from website was called");
+                            var url = $(".key").val();
+                            var url = encodeURI(url);
+                            var url = "https://api.import.io/store/connector/7275c60d-e690-4a2f-8ac6-1956ee09d5da/_query?input=webpage/url:" + url + "&&_apikey=7b4c104faa5a4a3399f38ef4c663f949c76e045d901de9892ee614a97afdb223dde0bd3f47db54662dcae9679071c3feee11a602998ff66702f39fff3a977d8504683fdc36418074a929318a50b1df83";
+                            console.log(url);
+                        };
+
                         function email() {
                             $("#tiles").html("");
+                            $(".assist").css("display", "none");
                             var ref = new Firebase("https://01234567890.firebaseio.com/emails/");
                             ref.once("value", function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
                                     var childData = childSnapshot.val();
                                     var key = childData.key;
                                     var value = childData.value;
-                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
-                        };
-                        function finances(){
-                                                	                            $(".assist").css("display", "none");
-
-                        data();	
+                            gettemplates();
                         };
 
                         function data() {
-                        	                            $(".assist").css("display", "none");
+                            $(".assist").css("display", "none");
                             $("#tiles").html("");
                             var ref = new Firebase("https://01234567890.firebaseio.com/data/");
                             ref.once("value", function(snapshot) {
@@ -461,14 +496,12 @@
                                     var childData = childSnapshot.val();
                                     var key = childData.key;
                                     var value = childData.value;
-                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='tileclick(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='callthisfunction(this.id);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
                                 });
                             });
                         };
 
-
                         function manualemail() {
-                        	                            $(".assist").css("display", "none");
                             console.log("manual email was called");
                             $(".forms").css("display", "block");
                             $(".manualemail").css("display", "block");
@@ -484,35 +517,61 @@
                             $("#footer").css("display", "none");
                         };
 
+
                         function finances() {
                             $(".forms").css("display", "block");
                             $(".manualdata").css("display", "block");
                         };
 
-			function leads() {
+                        function leads() {
                             console.log("leads was called");
-                            $(".forms").css("display", "block");
-                            $(".manualdata").css("display", "block");
+                            manualdata();
+                            $('.key').attr('placeholder', 'Name');
+                            $('.value').attr('placeholder', 'Email');
+                            $(".databutton").text('add lead');
+                            $(".base").css("display", "none");
+                            $('.adddataheader').html('Add new lead');
+                            getleads();
                         };
-                        
+
+                        function getleads() {
+                            console.log("getleads was called");
+                            var name = localStorage.getItem('name');
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/leads/");
+                            firebaseRef.once("value", function(snapshot) {
+                                snapshot.forEach(function(childSnapshot) {
+                                    var childData = childSnapshot.val();
+                                    var key = childData.key;
+                                    var value = childData.value;
+                                    console.log(key);
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='emailthisperson(this.id); thepersonsemail(this.className);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                });
+                            });
+                        };
+
+                        function emailthisperson(passed) {
+                            console.log("emailthisperson was called");
+                            manualemail();
+                            $('.toname').val(passed);
+                        };
+
+                        function thepersonsemail(passed) {
+                            console.log("thepersonsemail was called");
+                            $('.toemail').val(passed);
+                        };
+
                         function nurture() {
                             manualemail();
                             $('#formmessage').val("I wanted to check in and make sure all your questions are answered, and that you're not having any programs with the checkout process.  I'm committed to doing everything I can to help out. Whether you have a question about the products, the designs, or need a recommendation, I'd love to hear from you! Shoot me an email - or feel free to finish checking out your purchases. I'm incredibly passionate about design. I love the products that we make, and I think you will too! I look forward to hearing from you,");
                         };
 
                         function books() {
-                        	console.log('books was called');
-                        	                            $(".assist").css("display", "none");
-                            preview("https://www.carrd.co");
-                        };
-                        
-                        function build() {
-                            preview("https://www.carrd.co/build");
+                            preview("https://www.highlyreco.com");
                         };
 
                         function welcome() {
                             manualemail();
-                            $('#formmessage').val("Hey, I really appreciate your signing, and I'm sure you'll love it when you see how easy it is to get the right things done. We built Samu to help individuals (from managers via freelancers through to students) improve their productivity, and I hope that we can achieve that for you. If you wouldn’t mind, I’d love it if you answered one quick question: why did you sign up for Samu? I’m asking because knowing what made you sign up is really helpful for us in making sure that we’re delivering on what our users want. Just hit “reply” and let me know.");
+                            $('#formmessage').val("Hey, I really appreciate your signing, and I'm sure you'll love it when you see how easy it is to get the right things done. We built our product to help anybody improve their productivity, and I hope that we can achieve that for you. If you wouldn’t mind, I’d love it if you answered one quick question: why did you sign up for our product? I’m asking because knowing what made you sign up is really helpful for us in making sure that we’re delivering on what our users want. Just hit “reply” and let me know.");
                         };
 
                         function upgrade() {
@@ -522,7 +581,7 @@
 
                         function update() {
                             manualemail();
-                            $('#formmessage').val("As a friendly reminder, your account will be renewed later this week. If you wish to keep your account with us no action is required. My entire team is dedicated to ensuring your Squarespace experience is first rate. If you have any questions, comments, or suggestions, please let me know. Simply reply to this email and I'll make sure you receive a prompt response. Thank you again for your business.");
+                            $('#formmessage').val("As a friendly reminder, your account will be renewed later this week. If you wish to keep your account with us no action is required. My entire team is dedicated to ensuring your experience is first rate. If you have any questions, comments, or suggestions, please let me know. Simply reply to this email and I'll make sure you receive a prompt response. Thank you again for your business.");
                         };
 
                         function sendemail() {
@@ -538,7 +597,6 @@
                             var html = localStorage.getItem('html');
                             var toname = localStorage.getItem('toname');
 
-
                             $.ajax({
                                 type: "POST",
                                 url: "https://mandrillapp.com/api/1.0/messages/send.json",
@@ -553,13 +611,52 @@
                                         }],
                                         'subject': subject,
                                         'html': html
-
                                     }
                                 }
                             });
                         };
 
+
+
+
+ function start() {
+                            console.log('start was called ');
+                            cleartiles();
+                            $(".title").html("");
+                            $(".body").html("<div class='title'><input type='text' name='demo-name' id='demo-name' value='' class='projectname' placeholder='Project Name'></div>");
+                            $(".assistbutton").text("select style");
+                            $(".assist").css("display", "block");
+                            $(".name").focus();
+                        };
+                        
                         function newproject() {
+                        	if (localStorage.getItem("name") === null) {
+                        		getstarted();
+                                } else {
+                                    start();
+                                };
+                        };
+                        
+                        function selectstyle(){
+                        var name = $(".name").val();
+			var email = $(".email").val();
+			var projectname = $(".projectname").val();
+                        localStorage.setItem('projectname', projectname);
+			 $(".assist").css("display", "none");
+                            $("#tiles").html("");
+                            var ref = new Firebase("https://01234567890.firebaseio.com/organisations/Launch%20Services/");
+                            ref.once("value", function(snapshot) {
+                                snapshot.forEach(function(childSnapshot) {
+                                    var childData = childSnapshot.val();
+                                    var key = childData.key;
+                                    var value = childData.value;
+                                    var url = childData.url;
+                                    $("#tiles").append("<article id='" + key + "' class='" + url + "' name='" + value + "' onClick='preview(this.className); storekey(this.id); storevalue(this.name);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a ' href='javscript:; '> <h2>" + key + "</h2> <div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                });
+                            });
+                        };
+
+                        function comingsoon() {
                             $("#tiles").html("");
                             var ref = new Firebase("https://01234567890.firebaseio.com/organisations/Launch%20Services/");
                             ref.once("value", function(snapshot) {
@@ -590,9 +687,73 @@
                                 value: value,
                             });
                         };
-                        function getpro() {
-                            console.log("getpro was called");
 
+                        function addlead() {
+                            console.log("addlead was called");
+                            var name = localStorage.getItem('name');
+                            var key = $(".key").val();
+                            var value = $(".value").val();
+                            localStorage.setItem('key', key);
+                            localStorage.setItem('value', value);
+                            var key = localStorage.getItem('key');
+                            var value = localStorage.getItem('value');
+                            console.log(name);
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/leads/");
+                            var postRef = firebaseRef.push();
+                            postRef.set({
+                                key: key,
+                                value: value,
+                            });
+                        };
+
+                        function newtemplate() {
+                            console.log("newtemplate was called");
+                            manualemail();
+                            $(".emailbutton").text('save this template');
+                        };
+
+                        function savethistemplate() {
+                            var name = localStorage.getItem('name');
+                            var key = $(".subject").val();
+                            var value = $(".html").val();
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/emails/");
+                            var postRef = firebaseRef.push();
+                            postRef.set({
+                                key: key,
+                                value: value,
+                            });
+                        };
+                        
+                            function gettemplates() {
+                            console.log("gettemplates was called");
+                            var name = localStorage.getItem('name');
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/emails/");
+                            firebaseRef.once("value", function(snapshot) {
+                                snapshot.forEach(function(childSnapshot) {
+                                    var childData = childSnapshot.val();
+                                    var key = childData.key;
+                                    var value = childData.value;
+                                    console.log(key);
+                                    $("#tiles").append("<article id='" + key + "' class='" + value + "' onClick='emailthisperson(this.id); thepersonsemail(this.className);' class='style1'> <span class='image'> <img src='https://source.unsplash.com/random'> </span> <a href='#'><h2>" + key + "</h2><div class='content '> <p>" + value + "</p> </div> </a> </article>");
+                                });
+                            });
+                        };
+
+                        function getpro() {
+                        	showprodetails();
+                            console.log("get pro was called");
+                        };
+                        
+                        function showprodetails(){
+                            $(".assist").css("display", "block");
+                            $(".assistbutton").text("Fastur Pro");
+                            $(".body").html("By upgrading you get Custom Domain Support and SSL.<br><br> The cost is 25$/M charged annually. ($300USD)");
+                            $(".assistbutton").text("make upgrade payment");
+                        };
+
+                        function makeupgradepayment(){
+                            console.log("makeupgradepayment was called");
+                      
                             var handler = StripeCheckout.configure({
                                 key: 'pk_live_mdufsEUxVMK742qsZEJz4keg',
                                 image: 'https://fastur.ca/images/assist.png',
@@ -606,15 +767,14 @@
                             handler.open({
                                 name: 'Fastur.ca',
                                 description: 'Pro Plan',
-                                amount: 5000
+                                amount: 25000
                             });
                             e.preventDefault();
 
                             // Close Checkout on page navigation:
                             $(window).on('popstate', function() {
                                 handler.close();
-                            });
-                            console.log("get pro was called");
+                            });	
                         };
 
                         function dashboard() {
@@ -627,13 +787,19 @@
                         };
 
                         function addprojecttoaccount() {
+                            var projectname = localStorage.getItem('projectname');
                             var name = localStorage.getItem('name');
                             console.log("addprojecttoaccount was called");
+                            var key = localStorage.getItem('key');
+                            var value = localStorage.getItem('value');
                             var templateurl = localStorage.getItem('templateurl');
-                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/");
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/" + projectname);
                             var postRef = firebaseRef.push();
                             postRef.set({
-                                style: templateurl,
+                            	projectname: projectname,
+                                key: key,
+                                value: value,
+                                url: templateurl,
                             });
                         };
 
@@ -655,8 +821,22 @@
                             //write a confirmation to the user
                             console.log("Edits saved!");
                         };
+                        
+    function editchanges(passed){
+	console.log('editchanges was called');
+	console.log("passed" + passed);
+	     var projectname = localStorage.getItem('projectname');
+                            var name = localStorage.getItem('name');
+                            var key = localStorage.getItem('key');
+                            var value = passed;
+                            var firebaseRef = new Firebase("https://01234567890.firebaseio.com/organisations/" + name + "/projects/" + projectname);
+                            var postRef = firebaseRef.push();
+                            postRef.set({
+                                key: key,
+                                value: value,
+                            });
 
-
+    };
                         connect();
                         (function(i, s, o, g, r, a, m) {
                             i['GoogleAnalyticsObject'] = r;
@@ -671,8 +851,6 @@
                         ga('create', 'UA-75304280-1', 'auto');
                         ga('send', 'pageview');
                     </script>
-
-
 </body>
 
 </html>
